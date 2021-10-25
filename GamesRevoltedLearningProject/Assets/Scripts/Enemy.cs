@@ -16,10 +16,12 @@ public class Enemy : MonoBehaviour
     Animator animator;
 
     private float hitColorChangeTimer = 0.5f;
-    private float enemyDeathFallTimer = 1.5f;
+    private float enemyDeathFallTimer = 5.0f;
 
     public delegate void OnHealthChange();
     public static event OnHealthChange HealthDrop;
+
+    
 
 
     private void Start()
@@ -37,8 +39,8 @@ public class Enemy : MonoBehaviour
        
         if (health <= 0f)
         {
-            animator.enabled = false;
-            EnemyDeath();
+            
+            StartCoroutine(EnemyDeath());
             Debug.Log("Enemy died!!");
             
 
@@ -49,9 +51,12 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void EnemyDeath()
+    private IEnumerator EnemyDeath()
     {
+        animator.enabled = false;
         rigidbody.useGravity = true;
+        yield return new WaitForSeconds(enemyDeathFallTimer);
+        GameObject.Destroy(gameObject);
     }
 
     public IEnumerator ChangeTargetColorOnHit()
