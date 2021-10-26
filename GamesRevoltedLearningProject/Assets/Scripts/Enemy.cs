@@ -7,7 +7,7 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] public EnemySO enemySO;
     private Color hitColor = Color.red;
-    private Color baseColor = Color.white;
+    private Color baseColor = Color.black;
 
     float health;
 
@@ -31,6 +31,7 @@ public class Enemy : MonoBehaviour
         renderer = GetComponent<Renderer>();
         animator = GetComponent<Animator>();
         health = enemySO.health;
+        renderer.material.color = baseColor;
     }
     public void TakeDamage(float amount)
     {
